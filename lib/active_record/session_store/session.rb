@@ -29,7 +29,7 @@ module ActiveRecord
 
         # Hook to set up sessid compatibility.
         def find_by_session_id(session_id)
-          Thread.exclusive { setup_sessid_compatibility! }
+          Thread::MUTEX_FOR_THREAD_EXCLUSIVE.synchronize { setup_sessid_compatibility! }
           find_by_session_id(session_id)
         end
 
